@@ -26,11 +26,10 @@ def create_server(address,port,stop):
     handler.authorizer = users
     server = FTPServer(('0.0.0.0', port), handler)
     if stop!=0:
-        time=Timer(stop,server.close_all())
+        time=Timer(stop,server.close_all)
         print('FTP Server will exit in {} second'.format(stop))
         time.start()
-    server_thread=Thread(target=server.serve_forever())
-    server_thread.start()
+    server.serve_forever()
 #Work:
 address,port,stop=getmessage()
 create_server(address,port,stop)
