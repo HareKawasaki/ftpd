@@ -1,7 +1,7 @@
 from pyftpdlib.authorizers import DummyAuthorizer
 from pyftpdlib.handlers import FTPHandler
 from pyftpdlib.servers import FTPServer
-from threading import Timer,Thread
+from threading import Timer
 import os
 def getmessage():
     print('Use this script will share files without authentication')
