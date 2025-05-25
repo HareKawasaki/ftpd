@@ -34,7 +34,3 @@ def create_server(address,port,stop):
 #Work:
 address,port,stop=getmessage()
 create_server(address,port,stop)
-
-
-
-
