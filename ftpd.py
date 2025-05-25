@@ -1,19 +1,29 @@
 from pyftpdlib.authorizers import DummyAuthorizer
 from pyftpdlib.handlers import FTPHandler
 from pyftpdlib.servers import FTPServer
+from threading import Timer,Thread
 def getmessage():
     print('Use this script will share files without authentication')
     address=input('File Address:')
     port=int(input('Port:'))
-    return (address,port)
-def create_server(address,port):
+    stop_time=float(input('How many minutes do you want the program to stop:'))*60
+    return (address,port,stop_time)
+def create_server(address,port,stop):
     users=DummyAuthorizer()
-    users.add_anonymous(address,perm="elradfmw")
+    users.add_anonymous(address,perm="elr")
     handler = FTPHandler
     handler.authorizer = users
     server = FTPServer(('0.0.0.0', port), handler)
-    server.serve_forever()
-address,port=getmessage()
-create_server(address,port)
+    if stop!=0:
+        time=Timer(stop,server.close_all())
+        print('FTP Server will exit in {} second'.format(stop))
+        time.start()
+    server_thread=Thread(target=server.serve_forever())
+    server_thread.start()
+#Work:
+address,port,stop=getmessage()
+create_server(address,port,stop)
+
+
 
 
